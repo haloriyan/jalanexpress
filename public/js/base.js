@@ -197,4 +197,5 @@ const squarize = () => {
     });
 }
 
+// DO IT
 squarize();
