@@ -1,11 +1,15 @@
 <section class="footer smallPadding rata-kiri">
     <div class="wrap">
-        <div class="bagi lebar-50">
+        <div class="bagi desktop lebar-50">
             <img src="{{ asset('images/logo.png') }}" class="tinggi-60">
         </div>
-        <div class="bagi lebar-25">
-            <a href="#">
+        <div class="bagi desktop lebar-25">
+            <div class="tinggi-40 mobile"></div>
+            <a href="{{ route('user.about') }}">
                 <li>Tentang</li>
+            </a>
+            <a href="{{ route('user.pricing') }}">
+                <li>Harga</li>
             </a>
             <a href="#">
                 <li>FAQ</li>
@@ -13,11 +17,9 @@
             <a href="#">
                 <li>Syarat & Ketentuan</li>
             </a>
-            <a href="#">
-                <li>Lacak Pengiriman</li>
-            </a>
         </div>
-        <div class="bagi lebar-25">
+        <div class="bagi desktop lebar-25">
+            <div class="tinggi-40 mobile"></div>
             <a href="#">
                 <li>
                     <div class="icon"><i class="fab fa-facebook-square"></i></div>
@@ -44,4 +46,5 @@
             </a>
         </div>
     </div>
+    <div class="tinggi-80 mobile"></div>
 </section>

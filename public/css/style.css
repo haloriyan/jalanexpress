@@ -28,7 +28,7 @@ body {
 .bag-10 > .wrap { margin: 3.5% 5%; }
 h1,h2,h3,h4,h5,h6 {
     font-family: ProBold;
-    color: #666;
+    color: #3f3d56;
 }
 a { text-decoration: none;color: var(--firstColor); }
 p { font-family: ProReg;font-size: 18px;  }
@@ -143,6 +143,7 @@ select.box:focus {
 .bg-merah-transparan { background-color: #e74c3c30;color: #c0392b; }
 .bg-hijau { background-color: #2ecc71;color: #fff; }
 .bg-hijau-transparan { background-color: #2ecc7130 !important;color: #27ae60 !important; }
+.bg-hijau-2 { background-color: #27ae60;color: #fff; }
 .bg-biru { background-color: #2196f3;color: #fff; }
 .bg-biru-transparan { background-color: #1976d230;color: #2980b9; }
 .bg-oren { background-color: #f15b2d;;color: #fff; }
@@ -158,7 +159,7 @@ select.box:focus {
 .teks-hijau { color: #2ecc71; }
 .teks-biru { color: #1976d2; }
 .teks-oren { color: #f15b2d;; }
-.teks-primer { color: #eb597b; }
+.teks-primer { color: #3f3d56; }
 .teks-hitam { color: #444; }
 .teks-emas { color: #ffd700; }
 
@@ -460,6 +461,8 @@ table td form { display: inline-block; }
 .tinggi-450 { height: 450px; }
 .tinggi-400 { height: 500px; }
 .tinggi-350 { height: 350px; }
+.tinggi-320 { height: 320px; }
+.tinggi-310 { height: 310px; }
 .tinggi-300 { height: 300px; }
 .tinggi-250 { height: 250px; }
 .tinggi-210 { height: 210px; }

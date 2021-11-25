@@ -101,6 +101,14 @@ section.footer li div {
 }
 section.footer li .icon { width: 40px; }
 
+.bunder-bunder {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 90px;
+    background-color: #3f3d56;
+}
+
 @media (max-width: 480px) {
     header { z-index: 3; }
     header #menuBtn {
@@ -110,15 +118,21 @@ section.footer li .icon { width: 40px; }
     }
     header nav {
         position: fixed;
-        top: 70px;bottom: 0px;left: 150%;
+        top: 100px;bottom: 0px;left: 150%;
         width: 100%;
         margin: 0px;
         background-color: #fff;
         transition: 0.4s;
     }
+    header.stick nav{ top: 60px; }
     header nav.active { left: 0%; }
     header nav li {
         display: block;
+        line-height: 65px;
+    }
+    header nav li button {
+        width: 100%;
+        display: none;
     }
     header {
         top: 0px;

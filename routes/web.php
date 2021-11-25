@@ -9,6 +9,7 @@ Route::get('kirim', "UserController@send")->name('user.send');
 Route::post('kirim', "UserController@sending")->name('user.sending');
 Route::get('selesai', "UserController@done")->name('user.done');
 Route::get('bayar', "UserController@pay")->name('user.pay');
+Route::get('tarif', "UserController@pricing")->name('user.pricing');
 
 Route::get('pwd', function () {
     return bcrypt("inikatasandi");

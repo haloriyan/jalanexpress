@@ -19,14 +19,22 @@
     </a>
     <div onclick="toggleMenu()" id="menuBtn"><i class="fas fa-bars"></i></div>
     <nav>
-        <a href="#">
-            <li>Tentang</li>
-        </a>
+        <div class="mobile">
+            <a href="#">
+                <li>Tentang</li>
+            </a>
+            <a href="#">
+                <li>FAQ</li>
+            </a>
+            <a href="#">
+                <li>Hubungi Kami</li>
+            </a>
+        </div>
         <a href="{{ route('user.check') }}">
             <li>Lacak Pengiriman</li>
         </a>
         <a href="{{ route('user.send') }}">
-            <button class="hijau">Kirim Barang</button>
+            <li><button class="hijau">Kirim Barang</button></li>
         </a>
         {{-- <a href="#">
             <li>Halo, Riyan <i class="fas fa-angle-down ml-1"></i>
@@ -47,10 +55,6 @@
 </header>
 
 @yield('content')
-
-{{-- <div class="bottom">
-    @yield('bottom')
-</div> --}}
 
 <script src="{{ asset('js/base.js') }}"></script>
 <script>

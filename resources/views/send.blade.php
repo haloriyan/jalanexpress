@@ -59,7 +59,7 @@
                 <h3 class="border-bottom m-0 p-2 pl-3 pr-3">Informasi Pengirim</h3>
                 <div class="wrap">
                     <div class="mt-2">Alamat Pengambilan :</div>
-                    <select name="sender_region" class="box" required>
+                    <select name="sender_region" id="sender_region" class="box" required>
                         <option value="">-- PILIH AREA --</option>
                         @foreach ($schedules as $schedule)
                             @if (!in_array($schedule->region, $showedSenderRegion))
@@ -70,19 +70,21 @@
                             @endphp
                         @endforeach
                     </select>
-                    <textarea name="sender_address" class="box" placeholder="Masukkan alamat lengkap..."></textarea>
-                    <div class="mt-2">Waktu Pengambilan :</div>
+                    <textarea name="sender_address" id="sender_address" class="box" placeholder="Masukkan alamat lengkap..."></textarea>
+                    <div class="mt-2">Tanggal Pengambilan :</div>
                     <input type="text" class="box" id="pickup_date" name="pickup_date" required>
                     <div class="mb-2" id="timesArea"></div>
                     <input type="hidden" name="pickup_time" id="pickup_time" required>
                     <div class="bagi bagi-2 desktop">
                         <div class="mt-2">Nama Pengirim :</div>
-                        <input type="text" class="box" name="sender_name" required>
+                        <input type="text" class="box" id="sender_name" name="sender_name" required>
                     </div>
                     <div class="bagi bagi-2 desktop">
                         <div class="mt-2">No. Whatsapp Pengirim :</div>
-                        <input type="text" class="box" name="sender_phone" required>
+                        <input type="text" class="box" id="sender_phone" name="sender_phone" required>
                     </div>
+
+                    <div id="errorArea"></div>
 
                     <button type="button" class="hijau teks-kecil tinggi-40 mt-2" onclick="lanjut()">
                         Selanjutnya <i class="fas fa-angle-right"></i>
@@ -230,9 +232,43 @@
     }
 
     const lanjut = () => {
-        select(".senderArea").style.display = "none";
-        select(".receiverArea").style.display = "inline-block";
-        select("#sendBtn").style.display = "block";
+        let hasError = false;
+        let inputsName = {
+            sender_region: 'Area Pengambilan',
+            sender_address: 'Alamat Pengambilan',
+            sender_name: 'Nama Pengirim',
+            sender_phone: 'No. Whatsapp Pengirim',
+            pickup_date: 'Tanggal Pengambilan'
+        };
+        selectAll(".senderArea input,.senderArea textarea,.senderArea select").forEach(item => {
+            let type = item.getAttribute('type');
+            if (type !== undefined  && type != 'hidden' && item.value == "") {
+                hasError = true;
+                let name = item.getAttribute('name');
+                printError(`${inputsName[name]} belum diisi <i class="fas fa-times pointer ke-kanan" onclick="removeError(this)"></i>`);
+            }
+        });
+        if (choosenTime == "") {
+            hasError = true;
+            printError(`Waktu Pengambilan belum dipilih <i class="fas fa-times pointer ke-kanan" onclick="removeError(this)"></i>`)
+        }
+        if (!hasError) {
+            select(".senderArea").style.display = "none";
+            select(".receiverArea").style.display = "inline-block";
+            select("#sendBtn").style.display = "block";
+        }
+    }
+    const removeError = btn => {
+        let area = btn.parentNode;
+        area.remove();
+    }
+    const printError = msg => {
+        createElement({
+            el: 'div',
+            attributes: [['class', 'bg-merah-transparan rounded p-2 mt-2']],
+            html: msg,
+            createTo: '#errorArea'
+        });
     }
     const balik = () => {
         select(".senderArea").style.display = "inlin-block";

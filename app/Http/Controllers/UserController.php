@@ -15,6 +15,30 @@ class UserController extends Controller
     public function check() {
         return view('check');
     }
+    public function about() {
+        return view('about');
+    }
+    public function pricing() {
+        $schedulesRaw = ScheduleController::get()->orderBy('region', 'ASC')->get();
+        $schedules = [];
+
+        foreach ($schedulesRaw as $schedule) {
+            if (! array_key_exists($schedule->region, $schedules)) {
+                $schedules[$schedule->region] = [
+                    'price' => $schedule->price,
+                    'times' => []
+                ];
+            }
+
+            if (array_key_exists($schedule->region, $schedules)) {
+                array_push($schedules[$schedule->region]['times'], $schedule->time);
+            }
+        }
+
+        return view('pricing', [
+            'schedules' => $schedules
+        ]);
+    }
     public function send() {
         $schedules = ScheduleController::get()->orderBy('region', 'ASC')->get();
         return view('send', [
