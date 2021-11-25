@@ -1,0 +1,7 @@
+body { background-color: #fff; }
+
+.content {
+    position: absolute;
+    top: 80px;left: 30%;right: 30%;
+    margin-bottom: 80px;
+}
