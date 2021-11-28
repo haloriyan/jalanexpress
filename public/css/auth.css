@@ -5,3 +5,10 @@ body { background-color: #fff; }
     top: 80px;left: 30%;right: 30%;
     margin-bottom: 80px;
 }
+
+@media (max-width: 480px) {
+    .content {
+        left: 0%;right: 0%;
+        box-shadow: none;
+    }
+}

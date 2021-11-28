@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Session;
+use Storage;
+use Carbon\Carbon;
 use App\Models\Courier;
+use App\Models\ShipmentReceiver as Receiver;
 use Illuminate\Http\Request;
 
 class CourierController extends Controller
@@ -50,9 +53,23 @@ class CourierController extends Controller
     }
     public function home() {
         $myData = self::me();
+        $startDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+        $endDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+        $thisMonthJob = ShipmentController::get([
+            ['courier_id', $myData->id],
+            ['status', 1]
+        ])
+        ->whereBetween('pickup_date', [$startDate, $endDate])
+        ->with('receivers')->get();
+
+        $adminFee = 2000;
+        foreach ($thisMonthJob as $job) {
+            // $job->courier_income = $job->total_pay 
+        }
 
         return view('courier.home', [
-            'myData' => $myData
+            'myData' => $myData,
+            'thisMonthJob' => $thisMonthJob
         ]);
     }
     public function profile() {
@@ -61,6 +78,37 @@ class CourierController extends Controller
         return view('courier.profile', [
             'myData' => $myData
         ]);
+    }
+    public function editProfile(Request $request) {
+        $myData = self::me();
+        if ($request->has('_token')) {
+            $toUpdate = [
+                'name' => $request->name,
+            ];
+            if ($request->has('photo')) {
+                $photo = $request->file('photo');
+                $photoFileName = $photo->getClientOriginalName();
+                $toUpdate['photo'] = $photoFileName;
+                if ($myData->photo != null) {
+                    $deleteOldPhoto = Storage::delete('public/courier_photo/'.$myData->photo);
+                }
+                $photo->storeAs('public/courier_photo', $photoFileName);
+            }
+            if ($request->password != "") {
+                $toUpdate['password'] = bcrypt($request->password);
+                $loggingOut = Auth::guard('courier')->logout();
+            }
+            
+            $updateData = Courier::where('id', $myData->id)->update($toUpdate);
+            return redirect()->route('courier.profile.edit')->with(['message' => "Perubahan berhasil disimpan"]);
+        } else {
+            $message = Session::get('message');
+
+            return view('courier.profile.edit', [
+                'myData' => $myData,
+                'message' => $message
+            ]);
+        }
     }
     public function find(Request $request) {
         $myData = self::me();
@@ -93,6 +141,8 @@ class CourierController extends Controller
             'myData' => $myData
         ]);
     }
+
+    
     public function grabShipment($id) {
         $myData = self::me();
         
@@ -106,8 +156,13 @@ class CourierController extends Controller
     public function job() {
         $myData = self::me();
         $message = Session::get('message');
-        
-        $jobs = ShipmentController::get([['courier_id', $myData->id]])->get();
+        $dateNow = date('Y-m-d');
+
+        $jobs = ShipmentController::get([
+            ['courier_id', $myData->id],
+            ['pickup_date', '>=', $dateNow],
+            ['status', 0]
+        ])->get();
 
         return view('courier.job', [
             'myData' => $myData,
@@ -126,5 +181,53 @@ class CourierController extends Controller
         $photo->storeAs('public/pickup_photo', $photoFileName);
 
         return redirect()->route('courier.find.detail', $job->id);
+    }
+    public function receive($shipmentID, Request $request) {
+        $receiverID = $request->receiver_id;
+        $data = Receiver::where('id', $receiverID);
+
+        $photo = $request->file('bukti_kirim');
+        $photoFileName = $receiverID."_".$photo->getClientOriginalName();
+        $photo->storeAs('public/bukti_kirim', $photoFileName);
+
+        $data->update(['received_photo' => $photoFileName]);
+
+        // Check if it completed
+        $receiver = $data->with('shipment.receivers')->first();
+        $receivers = $receiver->shipment->receivers;
+        $countDone = 0;
+        foreach ($receivers as $rec) {
+            if ($rec->received_photo != null) {
+                $countDone += 1;
+            }
+        }
+        if ($countDone == $receivers->count()) {
+            $updateShipment = ShipmentController::get([['id', $receiver->shipment_id]])->update(['status' => 1]);
+        }
+        
+        return redirect()->route('courier.find.detail', $receiver->shipment->id);
+    }
+    public function history(Request $request) {
+        $myData = self::me();
+        $month = $request->month;
+        if ($request->month == "") {
+            $month = date('m');
+        }
+        if ($month < 10 && $month[0] != 0) {
+            $month = "0".$month;
+        }
+        $filterDate = date('Y-'.$month);
+
+        $jobs = ShipmentController::get([
+            ['courier_id', $myData->id],
+            ['status', 1],
+            ['pickup_date', 'LIKE', "%".$filterDate."%"]
+        ])->with('receivers')->get();
+
+        return view('courier.history', [
+            'myData' => $myData,
+            'month' => $month,
+            'jobs' => $jobs
+        ]);
     }
 }

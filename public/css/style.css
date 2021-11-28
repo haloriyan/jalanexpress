@@ -42,7 +42,7 @@ b { font-family: ProBold; }
 pre {
     white-space: pre-wrap;
     word-wrap: break-word;
-    font-family: ProBold;
+    font-family: ProReg;
 }
 
 div { transition: 0.4s; }
@@ -163,6 +163,8 @@ select.box:focus {
 .teks-hitam { color: #444; }
 .teks-emas { color: #ffd700; }
 
+.lh-20 { line-height: 20px; }
+.lh-25 { line-height: 25px; }
 .lh-30 { line-height: 30px; }
 .lh-35 { line-height: 35px; }
 .lh-40 { line-height: 40px; }

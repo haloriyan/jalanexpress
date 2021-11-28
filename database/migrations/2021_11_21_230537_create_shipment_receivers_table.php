@@ -23,7 +23,9 @@ class CreateShipmentReceiversTable extends Migration
             $table->string('receiver_address');
             $table->integer('weight');
             $table->string('dimension');
+            $table->integer('ongkir');
             $table->string('photo')->nullable();
+            $table->string('received_photo')->nullable();
             $table->text('notes')->nullable();
             $table->integer('status');
             $table->timestamps();

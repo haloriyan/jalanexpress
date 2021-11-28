@@ -26,7 +26,7 @@
                     <div class="text">JalanExpress</div>
                 </li>
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/jalanexpress" target="_blank">
                 <li>
                     <div class="icon"><i class="fab fa-instagram"></i></div>
                     <div class="text">@jalanexpress</div>
@@ -38,7 +38,7 @@
                     <div class="text">halo@jalanexpress.id</div>
                 </li>
             </a>
-            <a href="#">
+            <a href="https://wa.me/6285159772902" target="_blank">
                 <li>
                     <div class="icon"><i class="fas fa-phone-alt"></i></div>
                     <div class="text">+62 851 5977 2902</div>

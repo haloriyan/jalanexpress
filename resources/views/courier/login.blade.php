@@ -15,6 +15,7 @@
             </div>
         @endforeach
     @endif
+    
     {{ csrf_field() }}
     <div class="mt-2">No. Whatsapp :</div>
     <input type="text" class="box" name="phone" required>

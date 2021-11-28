@@ -26,7 +26,12 @@ Route::group(['prefix' => "kurir"], function () {
     Route::post('find/{id}/grab', "CourierController@grabShipment")->name('courier.find.grab')->middleware('Courier');
     Route::get('job', "CourierController@job")->name('courier.job')->middleware('Courier');
     Route::post('job/{id}/pickup', "CourierController@pickingUp")->name('courier.job.pickup')->middleware('Courier');
+    Route::post('job/{id}/receive', "CourierController@receive")->name('courier.job.receive')->middleware('Courier');
     Route::get('profile', "CourierController@profile")->name('courier.profile')->middleware('Courier');
+    Route::get('profile/edit', "CourierController@editProfile")->name('courier.profile.edit')->middleware('Courier');
+    Route::post('profile/edit', "CourierController@editProfile")->name('courier.profile.edit')->middleware('Courier');
+
+    Route::get('history', "CourierController@history")->name('courier.history')->middleware('Courier');
 
     Route::get('/', function () {
         return redirect()->route('courier.home');

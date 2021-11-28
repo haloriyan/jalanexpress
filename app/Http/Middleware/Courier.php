@@ -21,7 +21,7 @@ class Courier
         $myData = Auth::guard('courier')->user();
         if ($myData == "") {
             $currentRoute = Route::currentRouteName();
-            return redirect()->route('courier.loginPage', ['r' => $currentRoute]);
+            return redirect()->route('courier.loginPage', ['r' => $currentRoute])->withErrors(['Anda harus login dulu sebelum melanjutkan kembali']);
         }
         return $next($request);
     }

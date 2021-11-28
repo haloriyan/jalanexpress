@@ -11,7 +11,7 @@ class ShipmentReceiver extends Model
 
     protected $fillable = [
         'shipment_id','receiver_name','receiver_phone','receiver_region','receiver_address',
-        'weight','dimension','photo','notes','status'
+        'weight','dimension','ongkir','photo','received_photo','notes','status'
     ];
 
     public function shipment() {

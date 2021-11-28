@@ -20,7 +20,7 @@
                 <h2 class="mt-0">Lacak Pengiriman</h2>
                 <form action="#" id="formLacak">
                     <div class="mt-2">Masukkan Nomor Tracking :</div>
-                    <input type="text" class="box" name="shipping_code" id="shipping_code">
+                    <input type="text" class="box" name="shipping_code" id="shipping_code" value="{{ $request->code }}">
                     <button class="lebar-100 mt-3 hijau">Lacak</button>
                 </form>
             </div>
@@ -53,7 +53,7 @@
                                 <div class="mt-1">
                                     <div class="icon"><i class="fas fa-motorcycle"></i></div>
                                     <div class="bagi lebar-85">
-                                        <span id="courier_name"></span> - <span id="courier_phone"></span>
+                                        <span id="courier_name">Belum ada kurir</span> - <span id="courier_phone"></span>
                                     </div>
                                 </div>
                                 <div class="mt-1">
@@ -102,7 +102,7 @@
 
                 if (data.courier_id != null) {
                     select("#result #courier_name").innerText = data.courier.name;
-                    select("#result #courier_phone").innerText = data.courier.phone;
+                    select("#result #courier_phone").innerHTML = `<a href="https://wa.me/${data.courier.phone}" target="_blank">${data.courier.phone}</a>`;
                 }
                 select("#result #total_weight").innerText = data.total_weight;
 
@@ -168,5 +168,12 @@
 
         e.preventDefault();
     }
+
+    setTimeout(() => {
+        let shippingCode = select("#shipping_code").value;
+        if (shippingCode != "") {
+            select("#formLacak button").click();
+        }
+    }, 1500);
 </script>
 @endsection

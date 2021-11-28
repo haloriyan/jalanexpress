@@ -12,8 +12,8 @@ class UserController extends Controller
     public function index() {
         return view('index');
     }
-    public function check() {
-        return view('check');
+    public function check(Request $request) {
+        return view('check', ['request' => $request]);
     }
     public function about() {
         return view('about');
@@ -59,6 +59,7 @@ class UserController extends Controller
         $totalWeight = 0;
         $items = [];
         $photo = $request->file('photos');
+        $ongkirs = explode(",", $request->ongkirs);
 
         $shippingCode = "JE_".strtoupper(Str::random(8));
 
@@ -77,6 +78,7 @@ class UserController extends Controller
                 'receiver_address' => $receiver_address[$i],
                 'weight' => $weight[$i],
                 'dimension' => $dimension[$i],
+                'ongkir' => $ongkirs[$i],
                 'status' => 0,
                 'notes' => $notes[$i],
             ];
@@ -106,10 +108,18 @@ class UserController extends Controller
             $saveReceiver = ShipmentReceiver::create($item);
         }
 
-        return redirect()->route('user.pay', ['inv' => $shippingCode]);
+        return redirect()->route('user.done', ['code' => $shippingCode]);
     }
     public function done(Request $request) {
-        return view('done', ['request' => $request]);
+        $shipment = ShipmentController::get([['shipping_code', $request->code]])->with('receivers')->first();
+        if ($request->code == "" || $shipment == "") {
+            return redirect()->route('user.index');
+        }
+
+        return view('done', [
+            'request' => $request,
+            'shipment' => $shipment
+        ]);
     }
     public function pay(Request $request) {
         return view('pay', ['request' => $request]);

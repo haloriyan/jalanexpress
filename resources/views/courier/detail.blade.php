@@ -9,6 +9,7 @@
 
 @section('head.dependencies')
 <style>
+    a { color: #2ecc71; }
     header {
         left: 0px;right: 0px;top: 0px;
         line-height: 60px;
@@ -59,7 +60,7 @@
                 <div class="bagi icon"><i class="fas fa-map-marker"></i></div>
                 <div class="bagi text">
                     {{ $job->sender_region }} <br />
-                    <div class="mt-1">{{ $job->sender_address }}</div>
+                    <pre class="teks-normal lh-20 mt-1">{{ $job->sender_address }}</pre>
                 </div>
             </div>
 
@@ -96,7 +97,7 @@
 
                 <div class="mt-2 teks-kecil">
                     <div class="bagi icon"><i class="fas fa-user"></i></div>
-                    <div class="bagi text">{{ $receiver->receiver_name }} - {{ $receiver->receiver_phone }}</div>
+                    <div class="bagi text">{{ $receiver->receiver_name }} - <a href="https://wa.me/{{ $receiver->receiver_phone }}" target="_blank">{{ $receiver->receiver_phone }}</a></div>
                 </div>
                 <div class="mt-1 teks-kecil">
                     <div class="bagi icon"><i class="fas fa-box"></i></div>
@@ -111,13 +112,20 @@
                 @endif
 
                 @if ($job->courier_id == $myData->id && $job->pickup_date == date('Y-m-d') && $job->pickup_photo != null)
-                    <form action="#" method="POST" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="receiver_id" value="{{ $receiver->id }}">
-                        <div class="mt-2">Upload Bukti Pengiriman :</div>
-                        <input type="file" class="box teks-kecil tinggi-40" name="bukti_kirim">
-                        <button class="teks-kecil hijau p-0 tinggi-40 mt-1 pl-2 pr-2">Upload</button>
-                    </form>
+                    @if ($receiver->received_photo == null)
+                        <form action="{{ route('courier.job.receive', $job->id) }}" method="POST" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="receiver_id" value="{{ $receiver->id }}">
+                            <div class="mt-2">Upload Bukti Pengiriman :</div>
+                            <input type="file" class="box teks-kecil tinggi-40" name="bukti_kirim">
+                            <button class="teks-kecil hijau p-0 tinggi-40 mt-1 pl-2 pr-2">Upload</button>
+                        </form>
+                    @else
+                        <div class="mt-1 teks-kecil">
+                            <div class="bagi lebar-10"><i class="fas fa-camera"></i></div>
+                            <div class="bagi text tinggi-150 lebar-90" bg-image="{{ asset('storage/bukti_kirim/'.$receiver->received_photo) }}"></div>
+                        </div>
+                    @endif
                 @endif
             </div>
         </div>

@@ -55,10 +55,10 @@
                 </div>
             </div>
             <div class="bagi bagi-2 desktop">
-                <div class="tinggi-120 desktop"></div>
+                <div class="tinggi-110 desktop"></div>
                 <div class="tinggi-50 mobile"></div>
 
-                <h2 class="mt-2 lh-45">Kami Membantu Usaha untuk Bergerak Lebih Gesit dari yang Pernah Anda Lakukan</h2>
+                <h2 class="mt-2 lh-45">Bergerak Lebih Gesit dari yang Pernah Anda Lakukan</h2>
                 <p class="teks-besar lh-35">
                     Kecepatan waktu pengiriman adalah hal yang krusial dalam pelayanan. Kami mengirim pesanan Anda kepada pelanggan secepat Anda berkendara sendirian.
                 </p>

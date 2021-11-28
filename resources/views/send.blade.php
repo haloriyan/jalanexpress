@@ -21,6 +21,12 @@
         border-radius: 900px;
         display: none;
     }
+    .totalArea {
+        position: fixed;
+        bottom: 50px;right: 15%;
+        z-index: 3;
+        background-color: #fff;
+    }
     @media (max-width: 480px) {
         button[type=submit] {
             width: 100%;
@@ -51,6 +57,7 @@
 <form action="{{ route('user.sending') }}" method="POST" class="content rata-tengah" id="sendForm" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="hidden" id="schedules" value="{{ $schedules }}">
+    <input type="hidden" name="ongkirs" id="calculatedOngkir">
     <h2 class="m-0 rata-tengah">Kirim Barang</h2>
 
     <div class="bagi bagi-2 desktop rata-kiri senderArea">
@@ -108,6 +115,10 @@
 
     <button class="hijau" type="submit" id="sendBtn">Kirim</button>
 
+    <div class="totalArea bayangan-5 rounded p-2 d-none">
+        Total : <span class="teks-tebal" id="total">Rp 0</span>
+    </div>
+
     <div class="tinggi-120"></div>
 
     @include('components/Footer')
@@ -117,15 +128,34 @@
 
 @section('javascript')
 <script src="{{ asset('js/flatpickr/dist/flatpickr.min.js') }}"></script>
+<script src="{{ asset('js/moment.min.js') }}"></script>
 <script>
     let iReceivers = 0;
+    let calculatedOngkir = [];
     let schedules = JSON.parse(select("#schedules").value);
     let choosenTime = "";
+    let receiverTemp = {};
+    let receivers = [];
+    let minDate = moment("{{ date('Y-m-d') }}").add(1, 'day').format('YYYY-MM-DD');
 
     flatpickr("#pickup_date", {
-        minDate: "{{ date('Y-m-d') }}",
+        minDate: minDate,
         dateFormat: 'Y-m-d'
     });
+
+    const calculateOngkir = (val, i) => {
+        i -= 1;
+        schedules.forEach(schedule => {
+            if (schedule.region == val && schedule.time == `${choosenTime}:00`) {
+                calculatedOngkir[i] = schedule.price;
+            }
+        });
+
+        let sumOngkir = calculatedOngkir.reduce((a, b) => a + b);
+        select(".totalArea").classList.remove('d-none');
+        select(".totalArea #total").innerText = toIdr(sumOngkir);
+        select("input#calculatedOngkir").value = calculatedOngkir.toString();
+    }
 
     const renderReceiver = (isInit = null) => {
         iReceivers += 1;
@@ -139,7 +169,7 @@
             </h3>
             <div class="wrap">
             <div class="mt-2">Alamat Pengiriman :</div>
-                <select name="receiver_region[]" id="receiver_region" class="box" required>
+                <select name="receiver_region[]" id="receiver_region" class="box" required onchange="calculateOngkir(this.value, ${iReceivers})">
                     <option value="">-- PILIH AREA --</option>
                 </select>
                 <textarea name="receiver_address[]" id="receiver_address" class="box" placeholder="Masukkan alamat lengkap..."></textarea>
