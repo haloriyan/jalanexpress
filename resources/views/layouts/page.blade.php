@@ -20,7 +20,7 @@
     <div onclick="toggleMenu()" id="menuBtn"><i class="fas fa-bars"></i></div>
     <nav>
         <div class="mobile">
-            <a href="#">
+            <a href="{{ route('user.about') }}">
                 <li>Tentang</li>
             </a>
             <a href="#">

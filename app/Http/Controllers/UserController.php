@@ -136,4 +136,7 @@ class UserController extends Controller
             'message' => "OK"
         ]);
     }
+    public function term() {
+        return view('term');
+    }
 }

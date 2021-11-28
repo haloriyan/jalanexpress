@@ -25,7 +25,7 @@
         <div class="wrap">
             <div class="rata-tengah">
                 <div class="bagi lebar-70 desktop">
-                    <h2>Bayangkan... Kiriman Anda tiba di penerima hanya dalam waktu seperti Anda berkendara sendirian</h2>
+                    <h2>Bayangkan... Kiriman Anda tiba di penerima <br /> secepat Anda berkendara sendirian</h2>
                     <p>
                         <span class="teks-tebal">Jalan<span class="teks-hijau">Express</span></span>
                         mewujudkan imajinasi ini dan Anda tak perlu membayangkannya lagi.

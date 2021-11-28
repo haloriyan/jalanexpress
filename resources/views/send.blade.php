@@ -110,6 +110,8 @@
             <button type="button" class="hijau teks-kecil ke-kanan tinggi-40 mt-2" onclick="renderReceiver()">
                 <i class="fas fa-plus mr-1"></i> Tambah Penerima
             </button>
+
+            <div class="mt-2 teks-kecil">dengan menggunakan layanan pengiriman JalanExpress, Anda menyetujui <a href="{{ route('user.term') }}" target="_blank">Syarat dan Ketentuan</a> yang berlaku</div>
         </div>
     </div>
 

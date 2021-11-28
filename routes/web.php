@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', "UserController@index")->name('user.index');
 Route::get('lacak', "UserController@check")->name('user.check');
 Route::get('tentang', "UserController@about")->name('user.about');
+Route::get('syarat-ketentuan', "UserController@term")->name('user.term');
 Route::get('kirim', "UserController@send")->name('user.send');
 Route::post('kirim', "UserController@sending")->name('user.sending');
 Route::get('selesai', "UserController@done")->name('user.done');

@@ -14,7 +14,7 @@
             <a href="#">
                 <li>FAQ</li>
             </a>
-            <a href="#">
+            <a href="{{ route('user.term') }}">
                 <li>Syarat & Ketentuan</li>
             </a>
         </div>
