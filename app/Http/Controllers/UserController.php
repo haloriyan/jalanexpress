@@ -141,6 +141,8 @@ class UserController extends Controller
             
             $courierMessage = "Ada kiriman di JalanExpress nih, $courier->name.".PHP_EOL.PHP_EOL;
             $courierMessage .= "$request->sender_name ingin mengirim paket dari $request->sender_region ke ".count($items)." penerima pada $pickupDate jam $pickupTime.".PHP_EOL.PHP_EOL;
+            $courierMessage .= "Pickup : $pickupDate ($pickupTime)".PHP_EOL;
+            $courierMessage .= "Berat Total : $totalWeight".PHP_EOL;
             $courierMessage .= "Jika bersedia silahkan login ke website dan segera ambil kiriman sebelum diambil kurir lainnya".PHP_EOL.PHP_EOL;
             $courierMessage .= route('courier.find.detail', $saveSender->id);
 
