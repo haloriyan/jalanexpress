@@ -184,7 +184,7 @@ class CourierController extends Controller
             }
             
             $receiverMessage = "Halo, ".$receiver->receiver_name.PHP_EOL.PHP_EOL;
-            $receiverMessage .= $myData->name." dari JalanExpress akan mengirimkan paketmu dari $shipment->sender_name. Pastikan Anda berada di $receiver->receiver_address paling tidak 1 jam setelah pukul $shipment->pickup_time".PHP_EOL.PHP_EOL;
+            $receiverMessage .= $myData->name." dari JalanExpress akan mengirimkan paket Anda dari $shipment->sender_name. Pastikan Anda berada di $receiver->receiver_address paling tidak 1 jam setelah pukul $shipment->pickup_time".PHP_EOL.PHP_EOL;
             $receiverMessage .= "Untuk informasi detail, Anda dapat melihatnya di ".PHP_EOL.PHP_EOL.route('user.check', ['code' => $shipment->shipping_code]);
 
             $notifySender = NotifyController::send($receiverPhone, $receiverMessage);
@@ -271,6 +271,18 @@ class CourierController extends Controller
             'myData' => $myData,
             'month' => $month,
             'jobs' => $jobs
+        ]);
+    }
+    public function revenue(Request $request) {
+        $myData = self::me();
+        $month = $request->month == "" ? date('m') : $request->month;
+        $month = $month < 10 && $month[0] != 0 ? $month = "0".$month : $month;
+        
+        $filterDate = date('Y-'.$month);
+
+        return view('courier.history', [
+            'myData' => $myData,
+            'month' => $month,
         ]);
     }
 }

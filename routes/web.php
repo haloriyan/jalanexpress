@@ -24,7 +24,7 @@ Route::group(['prefix' => "kurir"], function () {
 
     Route::get('home', "CourierController@home")->name('courier.home')->middleware('Courier');
     Route::get('find', "CourierController@find")->name('courier.find')->middleware('Courier');
-    Route::get('find/{id}', "CourierController@findDetail")->name('courier.find.detail')->middleware('Courier');
+    Route::get('job/{id}', "CourierController@findDetail")->name('courier.find.detail')->middleware('Courier');
     Route::post('find/{id}/grab', "CourierController@grabShipment")->name('courier.find.grab')->middleware('Courier');
     Route::get('job', "CourierController@job")->name('courier.job')->middleware('Courier');
     Route::post('job/{id}/pickup', "CourierController@pickingUp")->name('courier.job.pickup')->middleware('Courier');
@@ -34,6 +34,7 @@ Route::group(['prefix' => "kurir"], function () {
     Route::post('profile/edit', "CourierController@editProfile")->name('courier.profile.edit')->middleware('Courier');
 
     Route::get('history', "CourierController@history")->name('courier.history')->middleware('Courier');
+    Route::get('revenue', "CourierController@revenue")->name('courier.revenue')->middleware('Courier');
 
     Route::get('/', function () {
         return redirect()->route('courier.home');

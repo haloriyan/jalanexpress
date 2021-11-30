@@ -41,6 +41,9 @@
         <a href="{{ route('courier.history') }}">
             <li>Riwayat Pengiriman</li>
         </a>
+        <a href="{{ route('courier.revenue') }}">
+            <li>Pendapatan</li>
+        </a>
         <a href="#">
             <li>Logout</li>
         </a>

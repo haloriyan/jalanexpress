@@ -5,6 +5,11 @@
 @php
     use Carbon\Carbon;
     Carbon::setLocale('id');
+
+    $senderPhone = $job->sender_phone;
+    if ($senderPhone[0] == "0") {
+        $senderPhone = preg_replace('/^0?/', "62", $senderPhone);
+    }
 @endphp
 
 @section('head.dependencies')
@@ -46,7 +51,7 @@
         <div class="teks-kecil">
             <div class="mt-3">
                 <div class="bagi icon"><i class="fab fa-whatsapp"></i></div>
-                <div class="bagi text">{{ $job->sender_phone }}</div>
+                <div class="bagi text"><a href="https://wa.me/{{ $senderPhone }}">{{ $job->sender_phone }}</a></div>
             </div>
             <div class="mt-1">
                 <div class="bagi icon"><i class="fas fa-calendar"></i></div>
@@ -84,6 +89,12 @@
 
 <div class="wrap mt-0">
     @foreach ($job->receivers as $receiver)
+        @php
+            $receiverPhone = $receiver->receiver_phone;
+            if ($receiverPhone[0] == "0") {
+                $receiverPhone = preg_replace('/^0?/', "62", $receiverPhone);
+            }
+        @endphp
         <div class="rata-tengah mt-1 mb-1">
             <div class="bagi tinggi-50" style="width: 3px;background-color: #ddd;"></div>
         </div>
@@ -97,7 +108,7 @@
 
                 <div class="mt-2 teks-kecil">
                     <div class="bagi icon"><i class="fas fa-user"></i></div>
-                    <div class="bagi text">{{ $receiver->receiver_name }} - <a href="https://wa.me/{{ $receiver->receiver_phone }}" target="_blank">{{ $receiver->receiver_phone }}</a></div>
+                    <div class="bagi text">{{ $receiver->receiver_name }} - <a href="https://wa.me/{{ $receiverPhone }}">{{ $receiver->receiver_phone }}</a></div>
                 </div>
                 <div class="mt-1 teks-kecil">
                     <div class="bagi icon"><i class="fas fa-box"></i></div>

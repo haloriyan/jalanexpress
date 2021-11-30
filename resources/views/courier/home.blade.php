@@ -5,19 +5,29 @@
 @php
     $names = explode(" ", $myData->name);
     $sumReceivers = 0;
+    $totalRevenue = $thisMonthJob->sum('total_pay');
     foreach ($thisMonthJob as $job) {
         $sumReceivers += $job->receivers->count();
     }
+    $setoran = 0;
+    if ($totalRevenue > 0) {
+        $setoran = 2000 * $sumReceivers;
+    }
+    $photo = $myData->photo == null ? asset("images/user-default.jpg") : asset('storage/courier_photo/'.$myData->photo);
 @endphp
     
 @section('content')
 <div class="bg-putih rounded bayangan-5 smallPadding">
     <div class="wrap">
-        <h3>Halo, {{ $names[0] }}
-            <a href="#" class="teks-hijau">
-                <i class="fas fa-bell ke-kanan"></i>
-            </a>
-        </h3>
+        <div class="bagi lebar-80">
+            <h3 class="mt-1 mb-0">Halo, {{ $names[0] }}</h3>
+            <div class="mt-1 teks-kecil teks-transparan">
+                Setoran : @currencyEncode($setoran)
+            </div>
+        </div>
+        <div class="bagi lebar-20">
+            <div class="photo lebar-100 squarize rounded-circle" bg-image="{{ $photo }}"></div>
+        </div>
     </div>
 </div>
 
