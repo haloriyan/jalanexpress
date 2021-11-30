@@ -39,7 +39,7 @@
 
 @foreach ($jobs as $job)
     <a href="{{ route('courier.find.detail', $job->id) }}">
-        <div class="bg-putih rounded bayangan-5 smallPadding">
+        <div class="bg-putih rounded bayangan-5 mt-2 smallPadding">
             <div class="wrap super">
                 <h4 class="m-0 mb-1">{{ $job->sender_name }} - {{ $job->sender_phone }}</h4>
                 <div class="teks-kecil">{{ $job->sender_region }}</div>

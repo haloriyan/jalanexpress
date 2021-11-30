@@ -15,6 +15,7 @@ Route::get('tarif', "UserController@pricing")->name('user.pricing');
 Route::get('pwd', function () {
     return bcrypt("inikatasandi");
 });
+Route::get('tes', "NotifyController@test");
 
 Route::group(['prefix' => "kurir"], function () {
     Route::get('login', "CourierController@loginPage")->name('courier.loginPage');

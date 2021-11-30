@@ -31,6 +31,21 @@ class CourierController extends Controller
 
         return redirect()->route('admin.courier')->with(['message' => "New courier has been added"]);
     }
+    public function update(Request $request) {
+        $id = $request->id;
+        $toUpdate = [
+            'name' => $request->name,
+            'phone' => $request->phone,
+        ];
+        if ($request->password != "") {
+            $toUpdate['password'] = bcrypt($request->password);
+        }
+
+        $data = Courier::where('id', $id);
+        $updateData = $data->update($toUpdate);
+
+        return redirect()->route('admin.courier')->with(['message' => "Courier data has been updated"]);
+    }
     public function loginPage() {
         $message = Session::get('message');
         return view('courier.login', ['message' => $message]);
@@ -145,8 +160,36 @@ class CourierController extends Controller
     
     public function grabShipment($id) {
         $myData = self::me();
+        Carbon::setLocale('id');
         
         $job = ShipmentController::get([['id', $id]]);
+        $shipment = $job->with('receivers')->first();
+        $pickupDate = Carbon::parse($shipment->pickup_date)->isoFormat('DD MMMM YYYY');
+        $pickupTime = Carbon::parse($shipment->pickup_time)->format('H:i');
+
+        // Notify Sender
+        $senderPhone = $shipment->sender_phone;
+        if ($senderPhone[0] == "0") {
+            $senderPhone = preg_replace('/^0?/', "62", $senderPhone);
+        }
+        $senderMessage = "Halo, $shipment->sender_name".PHP_EOL.PHP_EOL;
+        $senderMessage .= $myData->name." dari JalanExpress akan mengirimkan paket Anda. Pastikan semuanya telah siap untuk diambil pada $pickupDate";
+        $notifySender = NotifyController::send($senderPhone, $senderMessage);
+        
+        // Notify Receivers
+        foreach ($shipment->receivers as $receiver) {
+            $receiverPhone = $receiver->receiver_phone;
+            if ($receiverPhone[0] == "0") {
+                $receiverPhone = preg_replace('/^0?/', "62", $receiverPhone);
+            }
+            
+            $receiverMessage = "Halo, ".$receiver->receiver_name.PHP_EOL.PHP_EOL;
+            $receiverMessage .= $myData->name." dari JalanExpress akan mengirimkan paketmu dari $shipment->sender_name. Pastikan Anda berada di $receiver->receiver_address paling tidak 1 jam setelah pukul $shipment->pickup_time".PHP_EOL.PHP_EOL;
+            $receiverMessage .= "Untuk informasi detail, Anda dapat melihatnya di ".PHP_EOL.PHP_EOL.route('user.check', ['code' => $shipment->shipping_code]);
+
+            $notifySender = NotifyController::send($receiverPhone, $receiverMessage);
+        }
+        
         $job->update([
             'courier_id' => $myData->id
         ]);
