@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') - {{ env('APP_NAME') }}</title>
     <link rel="stylesheet" href="/css/style.min.css">
-    <link rel="stylesheet" href="/fa/css/all.min.css">
+    @if (env('APP_DEBUG') == true)
+        <link rel="stylesheet" href="/fa/css/all.min.css">
+    @endif
     <link rel="stylesheet" href="/css/index.css">
     @yield('head.dependencies')
 </head>
@@ -61,6 +63,9 @@
 </a>
 
 <script src="{{ asset('js/base.min.js') }}"></script>
+@if (env('APP_DEBUG') != true)
+    <script src="https://kit.fontawesome.com/f7626545fe.js" crossorigin="anonymous"></script>
+@endif
 <script>
     const toggleMenu = () => {
         select("header nav").classList.toggle('active');
