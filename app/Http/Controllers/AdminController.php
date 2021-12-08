@@ -56,4 +56,15 @@ class AdminController extends Controller
             'message' => $message
         ]);
     }
+    public function faq() {
+        $myData = self::me();
+        $message = Session::get('message');
+        $faqs = FaqController::get()->orderBy('created_at', 'DESC')->get();
+
+        return view('admin.faq', [
+            'myData' => $myData,
+            'faqs' => $faqs,
+            'message' => $message
+        ]);
+    }
 }

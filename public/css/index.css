@@ -150,7 +150,7 @@ section.footer li .icon { width: 40px; }
     }
     .content h2 { line-height: 50px;font-size: 30px; }
     .content p { line-height: 30px; }
-    .content button[type=submit] { 
+    button[type=submit].floatBtn { 
         width: 100%;
         position: fixed;
         bottom: 0px;left: 0px;right: 0px;

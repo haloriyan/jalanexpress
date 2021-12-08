@@ -37,7 +37,7 @@
             <div class="rata-tengah">
                 <div class="bagi lebar-60 desktop rata-kiri">
                     <p class="teks-besar">
-                        {{ env('APP_NAME') }} adalah layanan jalan-jalan keliling kota bagi barang kiriman maupun dokumen dengan tarif yang lebih hemat dan anti ribet, karena Anda tidak perlu mendaftar, login, dan mengingat password.
+                        {{ env('APP_NAME') }} adalah layanan jalan-jalan keliling kota bagi barang maupun dokumen dengan tarif yang lebih hemat dan anti ribet, karena Anda tidak perlu mendaftar, login, dan mengingat password.
                     </p>
                 </div>
             </div>

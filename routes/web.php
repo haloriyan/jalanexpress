@@ -11,6 +11,7 @@ Route::post('kirim', "UserController@sending")->name('user.sending');
 Route::get('selesai', "UserController@done")->name('user.done');
 Route::get('bayar', "UserController@pay")->name('user.pay');
 Route::get('tarif', "UserController@pricing")->name('user.pricing');
+Route::get('faq', "UserController@faq")->name('user.faq');
 
 Route::get('pwd', function () {
     return bcrypt("inikatasandi");
@@ -52,6 +53,13 @@ Route::group(['prefix' => "admin"], function () {
         Route::post('update', "ScheduleController@update")->name('admin.schedule.update')->middleware('Admin');
         Route::post('delete', "ScheduleController@delete")->name('admin.schedule.delete')->middleware('Admin');
         Route::get('/', "AdminController@schedule")->name('admin.schedule')->middleware('Admin');
+    });
+
+    Route::group(['prefix' => "faq"], function () {
+        Route::post('store', "FaqController@store")->name('admin.faq.store')->middleware('Admin');
+        Route::post('update', "FaqController@update")->name('admin.faq.update')->middleware('Admin');
+        Route::get('{id}/delete', "FaqController@delete")->name('admin.faq.delete')->middleware('Admin');
+        Route::get('/', "AdminController@faq")->name('admin.faq')->middleware('Admin');
     });
     
     Route::group(['prefix' => "courier"], function () {

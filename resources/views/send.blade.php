@@ -104,6 +104,7 @@
     <div class="bagi bagi-2 desktop rata-kiri receiverArea" style="display: none !important;">
         <div class="wrap">
             <div id="renderReceivers"></div>
+            <div id="errorArea"></div>
             <button type="button" class="teks-kecil teks-hijau tinggi-40 mt-2" onclick="balik()">
                 <i class="fas fa-angle-left mr-1"></i> ubah informasi pengirim
             </button>
@@ -186,7 +187,7 @@
 
                 <div class="bagi bagi-3">
                     <div class="mt-2"> Berat (kg) :</div>
-                    <input type="number" min="1" max="6" class="box" name="weight[]" required>
+                    <input type="number" min="1" max="5" onchange="checkWeight(this.value)" class="box" name="weight[]" required>
                 </div>
                 <div class="bagi bagi-3">
                     <div class="mt-2"> Dimensi (cm) :</div>
@@ -277,12 +278,12 @@
             if (type !== undefined  && type != 'hidden' && item.value == "") {
                 hasError = true;
                 let name = item.getAttribute('name');
-                printError(`${inputsName[name]} belum diisi <i class="fas fa-times pointer ke-kanan" onclick="removeError(this)"></i>`);
+                printError(`${inputsName[name]} belum diisi`);
             }
         });
         if (choosenTime == "") {
             hasError = true;
-            printError(`Waktu Pengambilan belum dipilih <i class="fas fa-times pointer ke-kanan" onclick="removeError(this)"></i>`)
+            printError(`Waktu Pengambilan belum dipilih`)
         }
         if (!hasError) {
             select(".senderArea").style.display = "none";
@@ -298,7 +299,7 @@
         createElement({
             el: 'div',
             attributes: [['class', 'bg-merah-transparan rounded p-2 mt-2']],
-            html: msg,
+            html: `${msg} <i class="fas fa-times pointer ke-kanan" onclick="removeError(this)"></i>`,
             createTo: '#errorArea'
         });
     }
@@ -306,6 +307,12 @@
         select(".senderArea").style.display = "inlin-block";
         select(".receiverArea").style.display = "none";
         select("#sendBtn").style.display = "none";
+    }
+    const checkWeight = weight => {
+        if (weight > 5) {
+            selectAll("#errorArea").forEach(err => err.innerHTML = "");
+            printError("Berat setiap alamat tidak boleh lebih dari 5 kg");
+        }
     }
 </script>
 @endsection

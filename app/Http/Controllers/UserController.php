@@ -181,4 +181,10 @@ class UserController extends Controller
     public function term() {
         return view('term');
     }
+    public function faq() {
+        $faqs = FaqController::get()->orderBy('created_at', 'DESC')->get();
+        return view('faq', [
+            'faqs' => $faqs
+        ]);
+    }
 }

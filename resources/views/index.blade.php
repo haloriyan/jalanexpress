@@ -38,11 +38,11 @@
 <div class="content">
     <h2>{{ env('APP_DESCRIPTION') }}</h2>
     <p>
-        Kirim pesanan pelangganmu ke manapun dalam Kota Surabaya dengan tarif 12 RIBU tanpa biaya tambahan apapun
+        Kirim pesanan pelangganmu ke manapun dalam Kota Surabaya dengan tarif 15 RIBU tanpa biaya tambahan apapun
     </p>
 
     <a href="{{ route('user.send') }}">
-        <button type="submit" class="hijau lebar-50 mt-3">Kirim Barang</button>
+        <button type="submit" class="hijau lebar-50 mt-3 desktop">Kirim Barang</button>
     </a>
 </div>
 

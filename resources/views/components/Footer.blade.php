@@ -11,7 +11,7 @@
             <a href="{{ route('user.pricing') }}">
                 <li>Harga</li>
             </a>
-            <a href="#">
+            <a href="{{ route('user.faq') }}">
                 <li>FAQ</li>
             </a>
             <a href="{{ route('user.term') }}">
